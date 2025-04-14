@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previous Chat</title>
+  <!-- Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/chat.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <style>
+    .chat-layout {
+      display: flex;
+      min-height: calc(100vh - 4rem);
+    }
+
+    .chat-container {
+      flex-grow: 10;
+      display: flex;
+      flex-direction: column;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background: whitesmoke;
+      border: 2px solid #a0c4d8;
+      display: flex;
+      flex-direction: column;
+      margin-top: 0.75rem;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 0.75rem;
+      word-wrap: break-word; /* Ensures wrapping within container */
+      white-space: normal; /* Prevents overflow and keeps the text wrapped */
+      transition: transform 0.2s ease;
+    }
+
+    .message:hover {
+      transform: translateY(-2px);
+    }
+
+    .user-message {
+      text-align: right;
+      color: #003366;
+      margin-left: auto;
+      background-color: #cce5ff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .user-message {
+      text-align: right;
+      color: #ffffff;
+      background: linear-gradient(135deg, #8fbcd4, #6da1b9);
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .message-input textarea {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 2px solid #8fbcd4;
+  background: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 0rem; /* Set the height of the textarea */
+}
+
+    .user-message:hover {
+      background: linear-gradient(135deg, #9dc8e1, #7baeb8);
+      transform: scale(1.02);
+    }
+
+    .bot-message {
+      text-align: left;
+      color: #ffffff;
+      background: linear-gradient(135deg, #6da1b9, #8fbcd4);
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .bot-message:hover {
+      background: linear-gradient(135deg, #7baeb8, #9dc8e1);
+      transform: scale(1.02);
+    }
+
+    .message-input {
+      display: flex;
+      padding: 0.75rem;
+      background-color: #f0f0f0;
+      border-top: 1px solid #ddd;
+    }
+
+    .message-input input {
+      flex-grow: 1;
+      padding: 0.5rem;
+      border: 2px solid #8fbcd4;
+      background: white;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .message-input input:focus {
+      outline: none;
+      border-color: #6da1b9;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-send {
+      background: linear-gradient(135deg, #8fbcd4, #6da1b9);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 50%;
+      margin-left: 0.5rem;
+      transition: background 0.3s ease, transform 0.2s;
+      position: relative;
+    }
+
+    .btn-send:hover {
+      background: linear-gradient(135deg, #7aa7bf, #5c95aa);
+      transform: scale(1.05);
+    }
+
+    .btn-send:active {
+      background: linear-gradient(135deg, #6a93ab, #518198);
+      transform: scale(0.95);
+    }
+
+    .chat-sidebar {
+      width: 220px;
+      background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
+      padding: 1rem;
+      box-shadow: -2px 0 5px rgba(11, 97, 172, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+
+    .card {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 0.25rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      height: 23%;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card i {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
+      color: #005f73;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #eaf8fb, #d4f1f9);
+      color: #005f73;
+    }
+</style>
+
+</head>
+<body class="bg-gray-100">
+  <div class="flex flex-col min-h-screen">
+    <div class="flex-grow chat-layout">
+      <!-- Chat Sidebar -->
+      <div class="chat-sidebar">
+        <div class="card">
+          <i class="fas fa-plus"></i>
+          <a href="/chat/new" class="btn-primary">New Chat</a>
+        </div>
+        <div class="card">
+          <i class="fas fa-home"></i>
+          <a href="/user/dashboard" class="btn-primary">Home</a>
+        </div>
+        <div class="card">
+          <i class="fas fa-history"></i>
+          <a href="/user/history" class="btn-primary">History</a>
+        </div>
+        <div class="card">
+          <i class="fas fa-user"></i>
+          <a href="/user/account" class="btn-primary">Account</a>
+        </div>
+      </div>
+
+      <!-- Chat window -->
+      <div class="chat-container">
+        <div class="p-4 border-b border-gray-200">
+          <h4 class="font-semibold text-xl">Conversation with Chatbot</h4>
+        </div>
+        <div class="chat-box" id="chatBox">
+          <!-- Load existing messages -->
+          <input type="hidden" id="conversationId" value="<%= conversationId %>">
+          <% messages.forEach(message => { %>
+            <div class="message <%= message.sender === 'user' ? 'user-message' : 'bot-message' %>">
+              <%= message.sender === 'user' ? 'You' : 'Bot' %>: <%= message.content %>
+            </div>
+        
+            <% if (message.sender === 'bot' && message.source) { %>
+              <div class="source-container">
+                <script>
+                  const sourceButton = createSourceButton("<%= message.source %>");
+                  document.currentScript.parentNode.appendChild(sourceButton);
+                </script>
+              </div>
+            <% } %>
+          <% }) %>
+        </div>
+
+        <!-- Message Input Section -->
+        <div class="message-input">
+          <textarea id="message" class="form-control" placeholder="Type a message..." onkeydown="handleKeyPress(event)"></textarea>
+          <button class="btn btn-send" id="sendBtn" onclick="sendMessage()">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Including necessary scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        if (event.shiftKey) {
+          event.preventDefault();
+          const input = document.getElementById('message');
+          input.value += '\n';
+        } else {
+          event.preventDefault();
+          sendMessage();
+        }
+      }
+    }
+
+    function sendMessage() {
+      const message = document.getElementById('message').value;
+      if (message.trim() !== '') {
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('message', 'user-message');
+        newMessage.textContent = message;
+
+        document.getElementById('chatBox').appendChild(newMessage);
+        document.getElementById('message').value = '';
+        document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>

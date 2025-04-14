@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        .main-content {
+            padding-bottom: 4rem;
+        }
+        footer {
+            background-color: #333;
+            color: #ddd;
+            padding: 2rem 0;
+        }
+        /* Smooth transition for sidebar */
+        #sidebar {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Including header -->
+    <header class="bg-blue-500 text-white p-4">
+        <%- include('../../partials/aheader.ejs') %>
+    </header>
+
+    <div class="flex flex-col min-h-screen">
+        <div class="flex-grow flex">
+            <!-- Sidebar -->
+            <div id="sidebar" class="w-64 bg-white shadow-lg flex-none transform">
+                <div class="p-4 border-b border-gray-200 text-center">
+                    <img src="<%= user?.profilePicture || '/images/placeholder.png' %>" alt="Profile Picture" class="w-24 h-24 rounded-full mx-auto mb-2">
+                    <h3 class="text-xl font-semibold"><%= user?.name || 'Guest' %></h3>
+                    <p class="text-gray-600"><%= user?.email || 'No email available' %></p>
+                    <p class="text-gray-600"><%= user?.mobile || 'No mobile number available' %></p>
+                    <button id="editDetails" class="mt-2 bg-blue-500 text-white py-2 px-4 rounded shadow hover:bg-blue-600 focus:outline-none">✎ Edit Details</button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-1 p-6 main-content">
+                <button id="toggleSidebar" class="text-2xl text-gray-700 mb-4 focus:outline-none">
+                    &#9776;
+                </button>
+                <h1 class="text-3xl font-bold mb-4">User Settings</h1>
+
+                <!-- Settings Sections -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- General Settings Section -->
+                    <section class="bg-white shadow-lg rounded-lg p-4">
+                        <h2 class="text-xl font-semibold">General Settings</h2>
+                        <ul class="mt-2">
+                            <li><strong>Profile Settings</strong>
+                                <ul>
+                                    <li><a href="/user/settings/general/profile-picture" class="text-blue-500 hover:underline">Edit profile picture</a></li>
+                                    <li><a href="/user/settings/general/username" class="text-blue-500 hover:underline">Update username</a></li>
+                                    <li><a href="/user/settings/general/email" class="text-blue-500 hover:underline">Update email</a></li>
+                                    <li><a href="/user/settings/general/password" class="text-blue-500 hover:underline">Change password</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Theme Settings</strong>
+                                <ul>
+                                    <li><a href="/user/settings/general/theme" class="text-blue-500 hover:underline">Toggle dark/light mode</a></li>
+                                    <li><a href="/user/settings/general/customize-theme" class="text-blue-500 hover:underline">Customize theme colors</a></li>
+                                    <li><a href="/user/settings/general/font-settings" class="text-blue-500 hover:underline">Font size and style adjustments</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Language and Region</strong>
+                                <ul>
+                                    <li><a href="/user/settings/general/language" class="text-blue-500 hover:underline">Preferred language</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Chatbot Settings Section -->
+                    <section class="bg-white shadow-lg rounded-lg p-4">
+                        <h2 class="text-xl font-semibold">Chatbot Settings</h2>
+                        <ul class="mt-2">
+                            <li><strong>Chat History</strong>
+                                <ul>
+                                    <li><a href="/user/settings/chatbot/history" class="text-blue-500 hover:underline">View chat history</a></li>
+                                    <li><a href="/user/settings/chatbot/clear" class="text-blue-500 hover:underline">Clear chat history</a></li>
+                                    <li><a href="/user/settings/chatbot/export" class="text-blue-500 hover:underline">Export chat history</a></li>
+                                    <li><a href="/user/settings/chatbot/pause" class="text-blue-500 hover:underline">Pause chat history recording</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Privacy Settings</strong>
+                                <ul>
+                                    <li><a href="/user/settings/chatbot/lock" class="text-blue-500 hover:underline">Lock a chat</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Chatbot Preferences</strong>
+                                <ul>
+                                    <li><a href="/user/settings/chatbot/features" class="text-blue-500 hover:underline">Enable/disable specific chatbot features</a></li>
+                                    <li><a href="/user/settings/chatbot/response-style" class="text-blue-500 hover:underline">Set default response style</a></li>
+                                    <li><a href="/user/settings/chatbot/voice" class="text-blue-500 hover:underline">Manage chatbot voice settings</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Security Settings Section -->
+                    <section class="bg-white shadow-lg rounded-lg p-4">
+                        <h2 class="text-xl font-semibold">Security Settings</h2>
+                        <ul class="mt-2">
+                            <li><strong>Two-Factor Authentication (2FA)</strong>
+                                <ul>
+                                    <li><a href="/user/settings/security/2fa" class="text-blue-500 hover:underline">Enable/disable 2FA</a></li>
+                                    <li><a href="/user/settings/security/manage-2fa" class="text-blue-500 hover:underline">Manage 2FA methods</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Login Activity</strong>
+                                <ul>
+                                    <li><a href="/user/settings/security/activity" class="text-blue-500 hover:underline">View recent login activity</a></li>
+                                    <li><a href="/user/settings/security/devices" class="text-blue-500 hover:underline">Manage authorized devices</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Account Security</strong>
+                                <ul>
+                                    <li><a href="/user/settings/security/questions" class="text-blue-500 hover:underline">Security questions</a></li>
+                                    <li><a href="/user/settings/security/backup-codes" class="text-blue-500 hover:underline">Backup codes for account recovery</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Other Settings Section -->
+                    <section class="bg-white shadow-lg rounded-lg p-4">
+                        <h2 class="text-xl font-semibold">Others</h2>
+                        <ul class="mt-2">
+                            <li><strong>Feedback and Support</strong>
+                                <ul>
+                                    <li><a href="/user/settings/other/feedback" class="text-blue-500 hover:underline">Provide feedback</a></li>
+                                    <li><a href="/user/settings/other/support-docs" class="text-blue-500 hover:underline">Access support documentation</a></li>
+                                    <li><a href="/user/settings/other/contact" class="text-blue-500 hover:underline">Contact support</a></li>
+                                </ul>
+                            </li>
+                            <li><strong>Delete Account</strong>
+                                <ul>
+                                    <li><a href="/user/settings/other/delete-account" class="text-red-500 hover:underline">Delete your account</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-auto text-center text-white">
+            <%- include('../../partials/footer.ejs') %>
+        </footer>
+    </div>
+
+    <!-- Sidebar Toggle Script -->
+    <script>
+        const toggleSidebarBtn = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+        
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('transform', '-translate-x-full');
+        });
+    </script>
+</body>
+</html>

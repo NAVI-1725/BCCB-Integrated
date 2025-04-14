@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    /* Background gradient */
+    body {
+      background: linear-gradient(135deg, #d4e8f9, #a8cde8); 
+    }
+
+    /* Card styling */
+    .container {
+      padding: 20px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+
+    .success { color: #28a745; }
+    .error { color: #dc3545; }
+
+    /* Button styling */
+    .btn-dashboard {
+      padding: 10px 20px;
+      background-color: #7096b5;
+      color: white;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 4px;
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .btn-dashboard:hover {
+      background: linear-gradient(135deg, #c7e2f9, #a0cae8);;
+    }
+
+    /* Floating Bubble effect */
+    .bubble {
+      position: absolute;
+      bottom: -270px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #caefef, #c7e0ee);
+      border-radius: 50%;
+      animation: floatUp 10s infinite ease-in-out;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-600px) scale(1.2);
+      }
+      100% {
+        transform: translateY(-1000px) scale(0.8);
+      }
+    }
+
+    .bubble:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      animation-duration: 12s;
+    }
+
+    .bubble:nth-child(3) {
+      left: 25%;
+      width: 80px;
+      height: 80px;
+      animation-duration: 15s;
+    }
+
+    .bubble:nth-child(4) {
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      animation-duration: 11s;
+    }
+
+    .bubble:nth-child(5) {
+      left: 75%;
+      width: 100px;
+      height: 100px;
+      animation-duration: 20s;
+    }
+
+    /* Success Icon */
+    .success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px; /* Circle size */
+    height: 80px;
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #28a745; /* Green background for the circle */
+    color: #fff; /* White checkmark */
+    font-size: 36px; /* Bold, large checkmark */
+    font-weight: bold; /* Makes the checkmark bold */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+  }
+
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+  <div class="relative w-full">
+    <!-- Floating Bubbles -->
+    <div class="bubbles">
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+      <div class="bubble"></div>
+    </div>
+
+    <div class="container">
+      <% if (status === 'success') { %>
+        <div class="success-icon">&check;</div> <!-- Success tick icon -->
+       <b><h1 class="success">Success</h1></b>
+        <p><%= message %></p>
+        <% if (file) { %>
+          <p>File Name: <%= file.originalname %></p>
+          <p>File Size: <%= (file.size / 1024).toFixed(2) %> KB</p>
+        <% } %>
+      <% } else if (status === 'error') { %>
+        <h1 class="error">Error</h1>
+        <p><%= message %></p>
+      <% } %>
+      <!-- Button that redirects to the dashboard -->
+      <a href="/admin/dashboard" class="btn-dashboard">Go to Dashboard</a>
+    </div>
+  </div>
+
+</body>
+</html>

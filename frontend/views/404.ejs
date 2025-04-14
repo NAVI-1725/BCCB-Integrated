@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .error-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        .error-container h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+        .error-container p {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+        .error-container button {
+            font-size: 1rem;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .error-container button:hover {
+            background-color: #0056b3;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <img src="../images/UNDERPROGRESS.png" alt="Under Progress" style="height: 250px; width: 450px;">
+        <h1>Sorry, We Are Under Progress</h1>
+        <p>This page will be available soon.</p>
+        <button id="goBackButton">Go Back</button>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('goBackButton').addEventListener('click', function() {
+            if (document.referrer) {
+                // Redirect to the previous page using the referrer
+                window.location.href = document.referrer;
+            } else {
+                // Fallback in case there's no referrer (e.g., the user accessed the page directly)
+                window.history.back();
+            }
+        });
+    </script>
+</body>
+</html>

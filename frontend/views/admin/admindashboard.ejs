@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #9fc6e2, #ffffff); 
+        }
+        /* Main content spacing */
+        .main-content {
+            padding-top: 3rem; /* Adjust spacing from header */
+            padding-bottom: 6rem; /* Adjust spacing from footer */
+        }
+    
+        /* Button Styles */
+        .btn-primary {
+            color: black;
+            border: none;
+            background: linear-gradient(135deg, #d4e8f9, #a8cde8);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+    
+        .btn-primary:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #a8cde8, #d4e8f9);
+        }
+    
+        /* Grid spacing for cards */
+        .card-grid {
+            gap: 8px; /* Increased gap between cards */
+        }
+    
+        /* Bubble Animation */
+        .card {
+            animation: float 4s ease-in-out infinite;
+        }
+    
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    
+        /* Cards should have equal height */
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+    
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white text-gray-800 p-4 shadow">
+        <%- include('../partials/aheader.ejs') %>
+    </header>
+
+    <div class="flex flex-col min-h-screen">
+        <div class="flex-grow">
+            <!-- Main Content -->
+            <div class="p-6 main-content">
+                <h1 class="text-3xl font-bold main-heading">Admin Dashboard</h1>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card Component -->
+                    <% const cards = [
+                        { title: 'View Users', count: totalUsers, icon: 'users', link: '/admin/viewusers' },
+                        { title: 'View Admins', count: totalAdmins, icon: 'user-shield', link: '/admin/viewadmins' }
+                    ]; %>
+                    <% cards.forEach(card => { %>
+                        <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
+                            <div class="card-img-top text-center py-4">
+                                <i class="fas fa-<%= card.icon %> text-gray-800 text-4xl"></i>
+                            </div>
+                            <div class="card-body p-4 text-center">
+                                <h5 class="card-title text-xl font-semibold"><%= card.title %></h5>
+                                <p class="card-text text-gray-700"><%= card.count %></p>
+                                <a href="<%= card.link %>" class="btn btn-primary py-2 px-4 rounded shadow">View</a>
+                            </div>
+                        </div>
+                    <% }); %>
+
+                    <!-- Add Data Card -->
+                    <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
+                        <div class="card-img-top text-center py-4">
+                            <i class="fas fa-plus text-gray-800 text-4xl"></i>
+                        </div>
+                        <div class="card-body p-4 text-center">
+                            <h5 class="card-title text-xl font-semibold">Add Data</h5>
+                            <p class="card-text text-gray-700">Upload a file</p>
+                            <form id="uploadForm" action="/admin/upload_file" method="POST" enctype="multipart/form-data">
+                                <div class="mb-4">
+                                    <input 
+                                        type="file" 
+                                        id="fileUpload" 
+                                        name="file" 
+                                        required 
+                                        class="block w-full text-sm border-gray-300 rounded-lg bg-gray-50 focus:ring focus:border-blue-300"
+                                    >
+                                </div>
+                                <div class="mb-4 flex items-center">
+                                    <label for="vectorStoreName" class="text-sm font-medium text-gray-900 mr-2">
+                                        Name:
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="vectorStoreName" 
+                                        name="vectorStoreName" 
+                                        placeholder="Enter vector store name" 
+                                        required 
+                                        class="flex-grow p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                                    >
+                                </div>
+                                <button type="submit" class="btn btn-primary py-2 px-4 rounded shadow">Upload</button>
+                            </form>
+                            <script>
+                                document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+                                    event.preventDefault();
+                                    const fileInput = document.getElementById('fileUpload');
+                                    const vectorStoreNameInput = document.getElementById('vectorStoreName');
+
+                                    if (!fileInput.files[0] || !vectorStoreNameInput.value.trim()) {
+                                        alert('Please select a file and provide a valid vector store name.');
+                                        return;
+                                    }
+
+                                    const formData = new FormData();
+                                    formData.append('file', fileInput.files[0]);
+                                    formData.append('vectorStoreName', vectorStoreNameInput.value.trim());
+
+                                    try {
+                                        const response = await fetch('/admin/upload_file', {
+                                            method: 'POST',
+                                            body: formData,
+                                        });
+
+                                        if (!response.ok) {
+                                            throw new Error(`HTTP error! Status: ${response.status}`);
+                                        }
+
+                                        const result = await response.json();
+                                        alert(result.success ? 'File uploaded successfully!' : `Error: ${result.message}`);
+                                    } catch (error) {
+                                        console.error('Error:', error);
+                                        alert('An error occurred during the upload.');
+                                    }
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white text-center py-4">
+            <%- include('../partials/footer.ejs') %>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

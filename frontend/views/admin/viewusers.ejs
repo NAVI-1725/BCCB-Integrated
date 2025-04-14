@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffffff, #9fc6e2); 
+        }
+        /* General container height adjustment */
+        .container-height {
+            height: auto;
+        }
+
+        /* Main content spacing */
+        .main-content {
+            padding-bottom: 4rem;
+        }
+
+        /* Heading margins */
+        .main-heading {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Buttons: Black text, no outline */
+        .btn-primary {
+            color: black !important; /* Set button text color to black */
+            border: none !important; /* Remove blue border */
+            box-shadow: none !important; /* Remove shadow */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+            background: linear-gradient(135deg, #d4e8f9, #a8cde8);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+            background: linear-gradient(135deg, #a8cde8, #d4e8f9);
+        }
+
+        /* Table styles */
+        .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Search bar styling */
+        #searchInput {
+            width: 300px;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.375rem;
+        }
+
+        /* Bubble Animation */
+        .card {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-white text-gray-800 p-4 shadow">
+        <%- include('../partials/aheader.ejs') %>
+    </header>
+
+    <div class="flex flex-col min-h-screen">
+        <div class="flex-grow">
+            <div class="p-6 main-content">
+                <h1 class="text-3xl font-bold main-heading">View Users</h1>
+
+                <!-- Search and Filter Section -->
+                <div class="mb-6 flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <input type="text" id="searchInput" placeholder="Search Users" class="mr-4">
+                        <button id="searchButton" class="btn btn-primary py-2 px-4 rounded shadow">Search</button>
+                    </div>
+
+                    <!-- <div class="flex items-center">
+                        <label class="mr-4 text-gray-700 font-medium">Filter by Prime Status:</label>
+                        <button id="allUsers" class="btn-primary py-2 px-3 rounded shadow mx-1">All</button>
+                        <button id="primeUsers" class="btn-primary py-2 px-3 rounded shadow mx-1">Prime Users</button>
+                        <button id="normalUsers" class="btn-primary py-2 px-3 rounded shadow mx-1">Normal Users</button>
+                    </div> -->
+                </div>
+
+                <!-- Users Table -->
+                <div class="overflow-x-auto table-container bg-white shadow-lg rounded-lg p-4">
+                    <table class="min-w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="py-3 px-4 text-left font-semibold">Name</th>
+                                <th class="py-3 px-4 text-left font-semibold">Mobile</th>
+                                <th class="py-3 px-4 text-left font-semibold">Email</th>
+                                <!-- <th class="py-3 px-4 text-left font-semibold">Prime User</th> -->
+                            </tr>
+                        </thead>
+                        <tbody id="userTable">
+                            <% users.forEach(user => { %>
+                                <tr class="userRow border-b" data-prime="<%= user.primeUser %>">
+                                    <td class="py-3 px-4"><%= user.name %></td>
+                                    <td class="py-3 px-4"><%= user.mobile %></td>
+                                    <td class="py-3 px-4"><%= user.email %></td>
+                                    <!-- <td class="py-3 px-4"><%= user.primeUser ? 'Yes' : 'No' %></td> -->
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white p-4">
+            <%- include('../partials/footer.ejs') %>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Search users
+        document.getElementById('searchButton').addEventListener('click', function () {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const userRows = document.querySelectorAll('.userRow');
+
+            userRows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                const mobile = row.cells[1].textContent.toLowerCase();
+                const email = row.cells[2].textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || mobile.includes(searchTerm) || email.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Toggle users by prime status
+        document.getElementById('allUsers').addEventListener('click', function () {
+            const userRows = document.querySelectorAll('.userRow');
+            userRows.forEach(row => {
+                row.style.display = '';
+            });
+        });
+
+        document.getElementById('primeUsers').addEventListener('click', function () {
+            const userRows = document.querySelectorAll('.userRow');
+            userRows.forEach(row => {
+                row.style.display = row.getAttribute('data-prime') === 'true' ? '' : 'none';
+            });
+        });
+
+        document.getElementById('normalUsers').addEventListener('click', function () {
+            const userRows = document.querySelectorAll('.userRow');
+            userRows.forEach(row => {
+                row.style.display = row.getAttribute('data-prime') === 'false' ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

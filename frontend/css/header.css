@@ -1,0 +1,188 @@
+/* General Navbar Styling */
+.navbar-nav {
+    align-items: center;
+}
+
+.navbar-brand img {
+    vertical-align: middle;
+    max-height: 60px; /* Ensure consistent logo size */
+}
+
+.navbar-nav .nav-item .nav-link {
+    padding: 1rem 1.5rem; /* Matches logo height */
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover Effects for Navbar Links */
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+    transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Profile Picture Styling */
+#profilePic {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#profilePic:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Dropdown Styling */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 5px;
+    min-width: 150px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.profile-dropdown.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.profile-dropdown a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.dark-mode-toggle .icon {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+.dark-mode-toggle .toggle-label {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    margin: 0 10px;
+}
+
+.dark-mode-toggle .toggle-label input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.dark-mode-toggle .toggle-track {
+    background-color: #ccc;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.3s;
+}
+
+.dark-mode-toggle .toggle-thumb {
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s;
+}
+
+.dark-mode-toggle input:checked + .toggle-label .toggle-track {
+    background-color: #4caf50;
+}
+
+.dark-mode-toggle input:checked + .toggle-label .toggle-thumb {
+    transform: translateX(20px);
+}
+/* Add shadow and hover effects for the navbar */
+.navbar {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    background-color: #f8f9fa;
+}
+
+/* Logo hover effect */
+#logo {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Navbar toggler animation */
+.navbar-toggler {
+    border: none;
+    outline: none;
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggler:hover {
+    transform: rotate(90deg);
+}
+
+/* Optional background animation for nav-links */
+.navbar-nav .nav-link {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size 0.3s ease, color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-size: 100% 2px;
+}

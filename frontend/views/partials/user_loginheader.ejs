@@ -1,0 +1,89 @@
+<header>
+    <!-- White big header -->
+    <div class="big-header"></div>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="/">
+            <img src="/images/BOSCH.png" alt="BOSCH" id="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/login">Admin Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/BOSCHLOGO.png">
+
+    <style>
+        /* New big white header */
+        .big-header {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 40px);
+            background-color: #ffffff;
+            z-index: -1;
+        }
+
+        /* Modified navbar styles */
+        .navbar {
+            background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar .navbar-brand img {
+            max-height: 75px;
+            width: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="rgba%280, 0, 0, 0.5%29" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E') !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000000 !important;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* Animation for blue line under nav items on hover */
+        .navbar-nav .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #F53F4B;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .navbar-nav .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #0c6c7b !important;
+        }
+    </style>
+</header>

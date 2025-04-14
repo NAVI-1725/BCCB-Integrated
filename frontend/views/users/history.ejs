@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat History</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body, html {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, #ffffff, #d7eff4);
+    }
+
+    #main-content {
+      flex: 1;
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .history-container {
+      flex-grow: 1;
+    }
+
+    .card {
+      animation: float 4s ease-in-out infinite;
+      background-color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -10px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #d4f1f9;
+      animation: float-bubbles 15s ease-in-out infinite;
+    }
+
+    @keyframes float-bubbles {
+      0%, 100% { opacity: 0.7; transform: translateY(0) scale(1); }
+      50% { opacity: 0.4; transform: translateY(-50px) scale(1.5); }
+    }
+
+    .btn-primary {
+      color: #005f73;
+      border: none !important;
+      box-shadow: none !important;
+      transition: transform 0.3s ease, color 0.3s ease;
+      background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      color: black;
+      background: linear-gradient(135deg, #a8e0e8, #d4f1f9);
+    }
+  </style>
+</head>
+
+<body>
+<header class="bg-white text-gray-800 p-4 shadow">
+  <%- include('../partials/uheader.ejs') %>
+</header>
+
+<div id="main-content" class="p-6">
+  <h2 class="text-2xl font-semibold mb-4">History</h2>
+  <div class="history-container relative">
+    <% if (chatHistory.length === 0) { %>
+      <div class="flex flex-col items-center justify-center h-full">
+        <h1 class="text-lg font-bold text-gray-700">No history as of now</h1>
+        <h1 class="text-gray-600 text-center mt-2">Please start interacting with the chat bot to see the history.</h1>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+      </div>
+    <% } else { %>
+      <div class="flex items-center mb-6">
+        <button class="btn btn-primary py-2 px-4 rounded" onclick="showDeleteAllInput()">Delete All</button>
+        <input type="text" id="deleteAllInput" placeholder="Write 'DELETE ALL' to delete all" onkeyup="if (event.key === 'Enter') confirmClearAll()" class="border-2 border-gray-300 p-2 rounded ml-2 w-64">
+      </div>
+      <div id="blockView" class="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <% chatHistory.forEach(chat => { %>
+          <div class="card bg-white shadow-lg rounded-lg overflow-hidden p-4">
+            <p class="text-gray-700">
+              <%= chat.messages.length > 0 
+                ? (chat.messages.find(msg => msg.sender === 'user')?.content.slice(0, 25) + (chat.messages.find(msg => msg.sender === 'user')?.content.length > 25 ? '...' : '') || 'No user message') 
+                : 'No messages yet' %>
+            </p>
+            <p class="text-gray-700">Date: <%= new Date(chat.updatedAt).toLocaleString() %></p>
+            <div class="flex justify-between items-center mt-2">
+              <a href="/chat/<%= chat._id %>" class="btn btn-primary py-1 px-3 rounded">Open Chat</a>
+              <button class="delete-btn" data-chat-id="<%= chat._id %>" style="background: none; border: none; cursor: pointer;">
+                <i class="fas fa-trash text-black text-xl"></i>
+              </button>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<footer class="bg-gray-900 text-white text-center py-4">
+  <%- include('../partials/footer.ejs') %>
+</footer>
+
+<script src="/js/history.js"></script>
+</body>
+</html>

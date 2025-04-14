@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Dashboard</title>
+    
+        <!-- Tailwind CSS -->
+        <link 
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" 
+            rel="stylesheet">
+    
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="/css/styles.css">
+        <link rel="stylesheet" href="/css/dashboard.css">
+    
+        <!-- Bootstrap CSS -->
+        <link 
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+            rel="stylesheet">
+    
+        <!-- Font Awesome for icons -->
+        <link 
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" 
+            rel="stylesheet">
+    
+        <style>
+            body {
+            background: linear-gradient(135deg, #d7eff4, #ffffff); 
+        }
+            /* General container height adjustment */
+            .container-height {
+                height: auto;
+            }
+    
+            /* Dark mode image filter */
+            .dark-mode .container-logo {
+                filter: invert(1);
+            }
+    
+            /* Main content spacing */
+            .main-content {
+                padding-bottom: 4rem;
+            }
+    
+            /* Heading margins */
+            .main-heading {
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+    
+            /* Footer styles */
+            footer {
+                background-color: #333;
+                color: #ddd;
+                padding: 2rem 0;
+            }
+            footer h5 {
+                font-weight: 600;
+                margin-bottom: 1rem;
+            }
+            .footer-links a,
+            .footer-bottom-links a {
+                color: #ddd;
+                text-decoration: none;
+                font-size: 0.9rem;
+                margin: 0 0.5rem;
+            }
+            .footer-links a:hover,
+            .footer-bottom-links a:hover {
+                color: #fff;
+            }
+    
+            /* App icon hover effect */
+            #appIcon {
+                cursor: pointer;
+                transition: color 0.3s ease;
+            }
+            #appIcon:hover {
+                color: #a8e0e8;
+            }
+    
+            /* Buttons: Black text, no outline */
+            .btn-primary {
+                color: #005f73; /* Set button text color to black */
+                border: none ; /* Remove blue border */
+                box-shadow: none ; /* Remove shadow */
+                transition: transform 0.3s ease; /* Smooth hover effect */
+                background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
+            }
+            .btn-primary:hover {
+                transform: scale(1.05); /* Slight zoom on hover */
+                color: #000000;
+                background: linear-gradient(135deg, #a8e0e8, #d4f1f9);
+            }
+    
+            /* Bubble Animation */
+            .card {
+                animation: float 4s ease-in-out infinite;
+            }
+            @keyframes float {
+                0% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+                100% {
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+    
+<body class="bg-gray-100">
+    <!-- Updated Header -->
+    <header class="bg-white text-gray-800 p-4 shadow">
+        <%- include('../partials/uheader.ejs') %>
+    </header>
+
+    <div class="flex flex-col min-h-screen">
+        <div class="flex-grow">
+            <!-- Main Content -->
+            <div class="p-6 main-content">
+                <h1 class="text-3xl font-bold main-heading">User Dashboard</h1>
+
+                
+                <div id="appIconContainer" class="text-center mb-6">
+                    <i id="appIcon" class="fas fa-car text-5xl text-gray-800"></i>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- New Chat Container -->
+                    <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
+                        <div class="card-img-top text-center py-4">
+                            <i class="fas fa-comment-dots text-gray-800 text-4xl"></i>
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title text-xl font-semibold">New Chat</h5>
+                            <p class="card-text text-gray-700">Start a new chat session and explore.</p>
+                            <a href="/chat/new" class="btn btn-primary py-2 px-4 rounded shadow focus:outline-none">Start Chat</a>
+                        </div>
+                    </div>
+                    <!-- History Container -->
+                    <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
+                        <div class="card-img-top text-center py-4">
+                            <i class="fas fa-history text-gray-800 text-4xl"></i>
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title text-xl font-semibold">History</h5>
+                            <p class="card-text text-gray-700">View and manage your chat history here.</p>
+                            <a href="/chat/history" class="btn btn-primary py-2 px-4 rounded shadow focus:outline-none">View History</a>
+                        </div>
+                    </div>
+                    <!-- Account Details Container -->
+                    <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
+                        <div class="card-img-top text-center py-4">
+                            <i class="fas fa-user-circle text-gray-800 text-4xl"></i>
+                        </div>
+                        <div class="card-body p-4">
+                            <h5 class="card-title text-xl font-semibold">Account Details</h5>
+                            <p class="card-text text-gray-700">Manage your account settings and details.</p>
+                            <a href="/user/account" class="btn btn-primary py-2 px-4 rounded shadow focus:outline-none">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-gray-900 text-white text-center py-4">
+            <%- include('../partials/footer.ejs') %>
+          </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Toggle app icon
+        const appIcon = document.getElementById('appIcon');
+        appIcon.addEventListener('click', () => {
+            alert('App icon clicked!');
+        });
+
+        // Edit details
+        const editDetails = document.getElementById('editDetails');
+        editDetails.addEventListener('click', () => {
+            window.location.href = '/account/update';
+        });
+    </script>
+</body>
+</html>

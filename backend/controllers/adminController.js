@@ -4,12 +4,25 @@ const Chat = require('../models/chatModel');
 const AdminSettings = require('../models/admin/adminsettingsModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const multer = require('multer');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const path = require('path');
+const multer = require('multer');
+const mkdirp = require('mkdirp');
 
-// Setup multer for file uploads
-const upload = multer({ dest: 'uploads/' });
+// Use '/tmp/uploads' in production (on Vercel) and 'uploads/' locally
+const uploadsPath = process.env.NODE_ENV === 'production'
+  ? '/tmp/uploads'
+  : path.join(__dirname, '../uploads');
+
+// Ensure the directory exists (creates if not)
+mkdirp.sync(uploadsPath);
+
+// Setup multer with the dynamic destination
+const upload = multer({ dest: uploadsPath });
+
+// Modified export: attach upload to the exports instead of overwriting module.exports
+exports.upload = upload;
 
 // Helper function to generate JWT token
 const generateToken = (id) => {
@@ -48,8 +61,6 @@ exports.registerAdmin = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-const path = require('path');
 
 // Login Admin
 exports.loginAdmin = async (req, res) => {
@@ -92,7 +103,6 @@ exports.loginAdmin = async (req, res) => {
   }
 };
 
-
 // View Users
 exports.viewUsers = async (req, res) => {
   try {
@@ -114,7 +124,6 @@ exports.viewAdmins = async (req, res) => {
     res.status(500).send('Server Error');
   }
 };
-
 
 // Upload File
 exports.uploadFile = (req, res) => {
@@ -163,7 +172,6 @@ exports.uploadFile = (req, res) => {
     }
   });
 };
-
 
 // Admin Dashboard
 exports.getDashboard = async (req, res) => {

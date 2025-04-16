@@ -9,25 +9,32 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to add messages to the chat container
     function addMessageToChat(sender, message, source = null) {
         const messageElement = document.createElement('div');
-        const newMessageElement = document.createElement('span');
         messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'bot-message');
-        messageElement.textContent = message;
-
-        // Apply CSS to ensure word wrapping within the chat box
+    
+        // Render user message as plain text, bot message as HTML
+        if (sender === 'user') {
+            messageElement.textContent = message;
+        } else {
+            messageElement.innerHTML = message; // ✅ This renders the <p>, <ul>, <li>, etc. properly
+        }
+    
+        // Ensure proper wrapping
         messageElement.style.wordWrap = 'break-word';
         messageElement.style.whiteSpace = 'normal';
-
+    
         chatContainer.appendChild(messageElement);
-
+    
         // If a source is provided and it's a bot message, add the source button
         if (source && sender === 'bot') {
+            const sourceWrapper = document.createElement('div');
             const sourceButton = createSourceButton(source);
-            newMessageElement.appendChild(sourceButton);
-            chatContainer.appendChild(newMessageElement);
+            sourceWrapper.appendChild(sourceButton);
+            chatContainer.appendChild(sourceWrapper);
         }
-
-        chatContainer.scrollTop = chatContainer.scrollHeight; // Scroll to the latest message
-    }
+    
+        // Scroll to the latest message
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }       
 
     function createSourceButton(source) {
         const button = document.createElement('button');

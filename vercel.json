@@ -13,13 +13,15 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app.js"
+      "dest": "/backend/app.js"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/frontend/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "frontend/$1"
+      "dest": "/backend/app.js"
     }
   ]
 }
-
-

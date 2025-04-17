@@ -4,7 +4,8 @@
             <img src="../images/BOSCH.png" alt="Bosch Logo" class="navbar-logo">
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -117,6 +118,14 @@
 
         .profile-dropdown.show {
             display: flex;
+        }
+
+        /* Hide toggle and nav on mobile (<992px) */
+        @media (max-width: 991.98px) {
+            .navbar-toggler,
+            .navbar-collapse {
+                display: none !important;
+            }
         }
     </style>
 </header>

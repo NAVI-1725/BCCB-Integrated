@@ -1,152 +1,172 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background: linear-gradient(135deg, #d4e8f9, #a8cde8);">
-        <a class="navbar-brand" href="/admin/dashboard">
-            <img src="../images/BOSCH.png" alt="Bosch Logo" class="navbar-logo">
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.bosch.in/products-and-services/">Products and Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.bosch.in/our-company/bosch-in-india/">Our Company</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.bosch.in/careers/">Careers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.bosch.in/websites-worldwide/" title="Global">
-                        <i class="fas fa-globe"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Profile Dropdown -->
-            <div class="dropdown" id="profileDropdownContainer">
-                <img src="/images/power-off.png" alt="User Profile Picture" class="rounded-circle profile-pic" id="profilePic">
-                <div class="profile-dropdown" id="profileDropdown" aria-hidden="true">
-                    <a href="#">View Profile</a>
-                    <a href="#">Settings</a>
-                    <a href="#" id="logout">Logout</a>
-                </div>
-            </div>
+    <nav
+      class="navbar navbar-expand-lg navbar-light shadow-sm"
+      style="background: linear-gradient(135deg, #d4e8f9, #a8cde8);"
+    >
+      <a class="navbar-brand" href="/admin/dashboard">
+        <img src="../images/BOSCH.png" alt="Bosch Logo" class="navbar-logo" />
+      </a>
+  
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse show" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://www.bosch.in/products-and-services/"
+              >Products and Services</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://www.bosch.in/our-company/bosch-in-india/"
+              >Our Company</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.bosch.in/careers/"
+              >Careers</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://www.bosch.in/websites-worldwide/"
+              title="Global"
+            >
+              <i class="fas fa-globe"></i>
+            </a>
+          </li>
+        </ul>
+  
+        <div class="dropdown" id="profileDropdownContainer">
+          <img
+            src="/images/power-off.png"
+            alt="User Profile Picture"
+            class="rounded-circle profile-pic"
+            id="profilePic"
+          />
+          <div class="profile-dropdown" id="profileDropdown" aria-hidden="true">
+            <a href="#">View Profile</a>
+            <a href="#">Settings</a>
+            <a href="#" id="logout">Logout</a>
+          </div>
         </div>
+      </div>
     </nav>
-
+  
     <div class="big-header"></div>
-
+  
     <style>
-        /* Big white header background */
-        .big-header {
-            position: absolute;
-            top: -20px;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background: linear-gradient(135deg, #d4e8f9, #a8cde8);
-            z-index: -1;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      .big-header {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        height: 150px;
+        background: linear-gradient(135deg, #d4e8f9, #a8cde8);
+        z-index: -1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-brand img {
+        max-height: 75px;
+        width: auto;
+      }
+      .navbar-nav .nav-link {
+        color: #000;
+        position: relative;
+      }
+      .navbar-nav .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #F53F4B;
+        bottom: 0;
+        left: 0;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s ease-out;
+      }
+      .navbar-nav .nav-link:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+      .profile-dropdown {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        display: none;
+        flex-direction: column;
+        z-index: 10;
+      }
+      .profile-dropdown a {
+        color: #000;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+      .profile-dropdown a:hover {
+        background-color: #f1f1f1;
+      }
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+      .profile-dropdown.show {
+        display: flex;
+      }
+  
+      /* MOBILE: only logo visible */
+      @media (max-width: 991.98px) {
+        .navbar-toggler,
+        .navbar-collapse {
+          display: none !important;
         }
-
-        /* Navbar branding */
-        .navbar-brand img {
-            max-height: 75px;
-            width: auto;
-        }
-
-        /* Navbar links */
-        .navbar-nav .nav-link {
-            color: #000000;
-            position: relative;
-        }
-
-        /* Animation for blue underline on hover */
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background-color: #F53F4B;
-            bottom: 0;
-            left: 0;
-            transform: scaleX(0);
-            transform-origin: bottom right;
-            transition: transform 0.3s ease-out;
-        }
-
-        .navbar-nav .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-
-        /* Profile dropdown */
-        .profile-dropdown {
-            position: absolute;
-            top: 60px;
-            right: 0;
-            background: #ffffff;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            display: none;
-            flex-direction: column;
-            z-index: 10;
-        }
-
-        .profile-dropdown a {
-            color: #000;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .profile-dropdown a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .profile-pic {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-        }
-
-        .profile-dropdown.show {
-            display: flex;
-        }
+      }
     </style>
-</header>
-
-<script>
+  </header>
+  
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const profilePic = document.getElementById('profilePic');
-        const profileDropdown = document.getElementById('profileDropdown');
-        const profileDropdownContainer = document.getElementById('profileDropdownContainer');
-
-        // Toggle profile dropdown
-        profilePic.addEventListener('click', () => {
-            const isVisible = profileDropdown.classList.contains('show');
-            profileDropdown.classList.toggle('show', !isVisible);
-            profileDropdown.setAttribute('aria-hidden', isVisible);
-        });
-
-        // Close profile dropdown if clicked outside
-        document.addEventListener('click', (event) => {
-            if (!profileDropdownContainer.contains(event.target)) {
-                profileDropdown.classList.remove('show');
-                profileDropdown.setAttribute('aria-hidden', 'true');
-            }
-        });
-
-        // Logout button functionality
-        document.getElementById('logout').addEventListener('click', (event) => {
-            event.preventDefault();
-            fetch('/logout', { method: 'POST' })
-                .then(() => window.location.href = '/');
-        });
+      const pic = document.getElementById('profilePic');
+      const drop = document.getElementById('profileDropdown');
+      const container = document.getElementById('profileDropdownContainer');
+  
+      pic.addEventListener('click', () => {
+        const visible = drop.classList.contains('show');
+        drop.classList.toggle('show', !visible);
+        drop.setAttribute('aria-hidden', visible);
+      });
+  
+      document.addEventListener('click', e => {
+        if (!container.contains(e.target)) {
+          drop.classList.remove('show');
+          drop.setAttribute('aria-hidden', 'true');
+        }
+      });
+  
+      document.getElementById('logout').addEventListener('click', e => {
+        e.preventDefault();
+        fetch('/logout', { method: 'POST' }).then(() => (window.location.href = '/'));
+      });
     });
-</script>
+  </script>
+  

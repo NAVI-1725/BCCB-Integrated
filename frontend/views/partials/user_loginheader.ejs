@@ -5,7 +5,8 @@
         <a class="navbar-brand" href="/">
             <img src="/images/BOSCH.png" alt="BOSCH" id="logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -35,12 +36,12 @@
             z-index: -1;
         }
 
-        /* Modified navbar styles */
         .navbar {
             background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 1;
+            padding: 1rem 2rem;
         }
 
         .navbar .navbar-brand img {
@@ -63,7 +64,6 @@
             padding-bottom: 5px;
         }
 
-        /* Animation for blue line under nav items on hover */
         .navbar-nav .nav-link::after {
             content: '';
             position: absolute;
@@ -84,6 +84,21 @@
 
         .navbar-nav .nav-link:hover {
             color: #0c6c7b !important;
+        }
+
+        /* ---------- Responsive Adjustments ---------- */
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 0.5rem 1rem; /* Reduce navbar padding */
+            }
+
+            .navbar .navbar-brand img {
+                max-height: 50px; /* Smaller logo on mobile */
+            }
+
+            .big-header {
+                height: 100px; /* Reduced big-header height */
+            }
         }
     </style>
 </header>

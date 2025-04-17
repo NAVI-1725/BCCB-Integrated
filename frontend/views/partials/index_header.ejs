@@ -1,17 +1,26 @@
 <style>
-   
-  
+    /* Default (desktop view) */
     .navbar-brand img {
-        height: 255px; /* Keeps the logo height */
-        width: auto; /* Maintains aspect ratio */
+        height: 255px;
+        width: auto;
+    }
+  
+    /* Smaller header & logo on small devices */
+    @media (max-width: 576px) {
+        .navbar {
+            padding: 0.5rem 1rem;
+        }
+        .navbar-brand img {
+            height: 100px; /* smaller logo */
+        }
     }
   </style>
   
   <header>
-      <nav class="navbar navbar-light bg-white">
-          <a class="navbar-brand mx-auto" href="https://www.bosch.in/">
-              <img src="../images/BOSCH.png" alt="Bosch Logo">
-          </a>
-      </nav>
+    <nav class="navbar navbar-light bg-white">
+        <a class="navbar-brand mx-auto" href="https://www.bosch.in/">
+            <img src="../images/BOSCH.png" alt="Bosch Logo" class="img-fluid">
+        </a>
+    </nav>
   </header>
   

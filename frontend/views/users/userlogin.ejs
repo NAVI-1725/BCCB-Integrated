@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Login</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
     <link href="/css/styles.css" rel="stylesheet">
 
     <!-- Confetti JS -->
@@ -16,12 +14,8 @@
 
     <style>
         @keyframes move-background {
-            from {
-                background-position: 0 0;
-            }
-            to {
-                background-position: 100% 100%;
-            }
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
         }
 
         body::before {
@@ -42,45 +36,11 @@
             background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
             position: relative;
             overflow: hidden;
-        }
-
-        .nav-link {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 2px;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background-color: #007bff;
-            bottom: 0;
-            left: 0;
-            transform: scaleX(0);
-            transform-origin: bottom right;
-            transition: transform 0.3s ease-out;
-        }
-
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
-        
-        a {
-            color: #0a879a;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: #6dc9e2;
-            text-decoration: underline;
+            padding: 15px;
         }
 
         .login-box {
-            width: 100%;
+            width: 90%;
             max-width: 510px;
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: 30px;
@@ -97,12 +57,8 @@
         }
 
         @keyframes floating {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .bubble {
@@ -116,18 +72,9 @@
         }
 
         @keyframes float-bubbles {
-            0% {
-                opacity: 0.7;
-                transform: translateY(0) scale(1);
-            }
-            50% {
-                opacity: 0.4;
-                transform: translateY(-50px) scale(1.5);
-            }
-            100% {
-                opacity: 0.7;
-                transform: translateY(-100px) scale(1);
-            }
+            0% { opacity: 0.7; transform: translateY(0) scale(1); }
+            50% { opacity: 0.4; transform: translateY(-50px) scale(1.5); }
+            100% { opacity: 0.7; transform: translateY(-100px) scale(1); }
         }
 
         .bubble:nth-child(1) { left: 10%; animation-duration: 6s; }
@@ -161,42 +108,97 @@
         .btn-login:hover {
             transform: scale(1.05);
             color: #000000;
-            background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
         }
 
-        .error-message {
-            color: #d9534f;
+        .error-message, .success-message {
             text-align: center;
             font-weight: bold;
             margin-bottom: 15px;
         }
-        
-        .success-message {
-            color: #28a745;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 15px;
+
+        .error-message { color: #d9534f; }
+        .success-message { color: #28a745; }
+
+        a {
+            color: #0a879a;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
+
+        a:hover {
+            color: #6dc9e2;
+            text-decoration: underline;
+        }
+
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 2px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: #007bff;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        @media (max-width: 576px) {
+    .login-box {
+        padding: 15px; /* was 20px */
+        border-radius: 15px;
+        transform: scale(0.95); /* shrink slightly */
+    }
+
+    .form-control {
+        width: 100%;
+        font-size: 14px; /* smaller input text */
+        padding: 8px;
+    }
+
+    .btn-login {
+        width: 100%;
+        font-size: 14px; /* smaller button text */
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 1.3rem; /* smaller title */
+    }
+
+    label {
+        font-size: 14px;
+    }
+}
+
     </style>
 </head>
 <body>
-    <!-- Including header -->
     <header class="bg-blue-500 text-white p-4 text-center">
         <%- include('../partials/user_loginheader.ejs') %>
     </header>
 
     <div class="login-page">
         <div class="login-box">
-            <h2 class="text-center text-2xl font-bold mb-4">User Login</h2>
+            <h2 class="text-center font-bold mb-4">User Login</h2>
 
-            <% 
-                // Ensure query, error, and success are safely defined to avoid errors
+            <%
                 var query = typeof query !== 'undefined' ? query : {};
                 var errorMessage = (query.error ? query.error : (typeof error !== 'undefined' ? error : ""));
                 var successMessage = (query.success ? query.success : (typeof success !== 'undefined' ? success : ""));
             %>
 
-            <!-- Display success message if available -->
             <% if(successMessage) { %>
                 <div class="alert alert-success" role="alert">
                     <%= successMessage %>
@@ -210,7 +212,6 @@
                 </script>
             <% } %>
 
-            <!-- Display error message if available -->
             <% if(errorMessage) { %>
                 <div class="alert alert-danger" role="alert">
                     <%= errorMessage %>
@@ -227,13 +228,13 @@
             <form action="/user/login" method="post">
                 <div class="form-group">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control mt-1" id="email" name="email" required aria-label="Enter your email address" aria-describedby="emailHelp">
+                    <input type="email" class="form-control mt-1" id="email" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control mt-1" id="password" name="password" required aria-label="Enter your password">
+                    <input type="password" class="form-control mt-1" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block mt-3 btn-login">Login</button>
+                <button type="submit" class="btn btn-primary mt-3 btn-login">Login</button>
                 <p class="text-center mt-2">
                     <a href="/user/forgotpassword" class="text-red-500">Forgot Password?</a>
                 </p>
@@ -242,6 +243,7 @@
                 <a href="/user/register" class="text-red-700">Don't have an account? Register here</a>
             </p>
         </div>
+
         <!-- Floating bubbles -->
         <div class="bubble"></div>
         <div class="bubble"></div>
@@ -252,7 +254,6 @@
         <div class="bubble"></div>
     </div>
 
-    <!-- Including footer -->
     <footer class="bg-gray-800 text-white p-4 text-center">
         <%- include('../partials/footer.ejs') %>
     </footer>

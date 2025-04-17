@@ -45,7 +45,7 @@
         }
 
         .login-box {
-            width: 100%;
+            width: 90%;
             max-width: 510px;
             background-color: rgba(255, 255, 255, 0.5);
             border-radius: 30px;
@@ -115,13 +115,13 @@
         }
 
         .btn-login {
-    background-color: #7096b5; /* Red button */
-    border-color: #1f6ea7;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    width: 200px;
-    display: block; /* Makes the button behave like a block element */
-    margin: 20px auto; /* Centers the button horizontally */
-}
+            background-color: #7096b5; /* Red button */
+            border-color: #1f6ea7;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 200px;
+            display: block; /* Makes the button behave like a block element */
+            margin: 20px auto; /* Centers the button horizontally */
+        }
 
         .btn-login:hover {
             transform: scale(1.05);
@@ -139,6 +139,36 @@
             font-weight: bold;
             margin-bottom: 15px;
         }
+
+        /* Mobile adjustments */
+        @media (max-width: 576px) {
+            .login-box {
+                padding: 15px; /* Smaller padding */
+                border-radius: 15px;
+                transform: scale(0.95); /* Shrink the box slightly */
+            }
+
+            .form-control {
+                width: 100%;
+                font-size: 14px; /* Smaller text */
+                padding: 8px;
+            }
+
+            .btn-login {
+                width: 100%;
+                font-size: 14px; /* Smaller button text */
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 1.3rem; /* Smaller title */
+            }
+
+            label {
+                font-size: 14px;
+            }
+        }
+
     </style>
 </head>
 <body>

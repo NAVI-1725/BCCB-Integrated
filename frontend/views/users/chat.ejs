@@ -13,11 +13,12 @@
 
   <style>
     body {
-            background: linear-gradient(135deg, #ffffff, #d7eff4); 
-        }
-        
+      background: linear-gradient(135deg, #ffffff, #d7eff4);
+    }
+
     .chat-layout {
       display: flex;
+      position: relative;
       min-height: calc(100vh - 4rem);
     }
 
@@ -45,23 +46,12 @@
     .message {
       display: flex;
       margin-bottom: 0.75rem;
-      word-wrap: break-word; /* Ensures wrapping within container */
-      white-space: normal; /* Prevents overflow and keeps the text wrapped */
+      word-wrap: break-word;
+      white-space: normal;
       transition: transform 0.2s ease;
     }
-
     .message:hover {
       transform: translateY(-2px);
-    }
-
-    .user-message {
-      text-align: right;
-      color: #003366;
-      margin-left: auto;
-      background-color: #cce5ff;
-      padding: 0.5rem 1rem;
-      border-radius: 0.75rem;
-      transition: background-color 0.2s ease;
     }
 
     .user-message {
@@ -71,17 +61,12 @@
       padding: 0.5rem 1rem;
       border-radius: 0.75rem;
       transition: background-color 0.2s ease, transform 0.2s ease;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      overflow-wrap: break-word;
+      max-width: 80%;
+      margin-left: auto;
     }
-    .message-input textarea {
-  flex-grow: 1;
-  padding: 0.2rem;
-  border: 2px solid #a8e0e8;
-  background: white;
-  border-radius: 1.10rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 0rem; /* Set the height of the textarea */
-}
-
     .user-message:hover {
       background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
       transform: scale(1.02);
@@ -94,15 +79,13 @@
       padding: 0.5rem 1rem;
       border-radius: 0.75rem;
       transition: background-color 0.2s ease, transform 0.2s ease;
-      white-space: normal !important;  /* Allow line breaks */
-      word-wrap: break-word !important;  /* Break long words */
+      white-space: normal !important;
+      word-wrap: break-word !important;
       overflow-wrap: break-word;
-      display: block;        /* Ensures text doesn't overflow */
       display: inline-block;
       width: fit-content;
       max-width: 80%;
     }
-
     .bot-message:hover {
       background: linear-gradient(135deg, #7baeb8, #9dc8e1);
       transform: scale(1.02);
@@ -115,20 +98,17 @@
       border-top: 1px solid #ddd;
     }
 
-    .message-input input {
+    .message-input textarea {
       flex-grow: 1;
       padding: 0.5rem;
       border: 2px solid #a8e0e8;
       background: white;
-      border-radius: 0.25rem;
+      border-radius: 1.1rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border: 2px solid #a8e0e8;
-    }
-
-    .message-input input:focus {
-      outline: none;
-      border-color: #a8e0e8;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+      height: auto;
+      min-height: 3rem;
+      max-height: 10rem;
+      resize: vertical;
     }
 
     .btn-send {
@@ -141,13 +121,11 @@
       transition: background 0.3s ease, transform 0.2s;
       position: relative;
     }
-
     .btn-send:hover {
       background: linear-gradient(135deg, #7eb6bf, #cfdee2);
       transform: scale(1.05);
       color: #000;
     }
-
     .btn-send:active {
       background: linear-gradient(135deg, #6a93ab, #518198);
       transform: scale(0.95);
@@ -178,17 +156,15 @@
       transition: transform 0.3s, box-shadow 0.3s;
       height: 23%;
     }
-
     .card:hover {
       transform: scale(1.15);
       box-shadow: 2px 9px 15px rgba(0, 0, 0, 0.2);
       border-radius: 5.05rem;
       width: 84%;
-      background:linear-gradient(135deg, #8ddfeb, #f2fbfd);
+      background: linear-gradient(135deg, #8ddfeb, #f2fbfd);
       align-self: center;
       border: 2px solid #ffffff;
     }
-
     .card i {
       font-size: 2.5rem;
       margin-bottom: 0.5rem;
@@ -202,15 +178,34 @@
       text-decoration: none;
       transition: background-color 0.3s;
     }
-
     .btn-primary:hover {
       background: linear-gradient(135deg, #d4f1f9, #a8e0e8);
       color: #000;
       border: 2px solid #a8e0e8;
       border-radius: 0.45rem;
     }
-    
-</style>
+
+    @media (max-width: 768px) {
+      .chat-sidebar {
+        position: fixed;
+        z-index: 50;
+        left: -100%;
+        top: 0;
+        height: 100%;
+        width: 70%;
+        transition: left 0.3s ease-in-out;
+      }
+      .chat-sidebar.active {
+        left: 0;
+      }
+      .chat-layout {
+        flex-direction: column;
+      }
+      .chat-container {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body class="bg-gray-100">
   <div class="flex flex-col min-h-screen">
@@ -221,17 +216,14 @@
           <i class="fas fa-plus"></i>
           <a href="/chat/new" class="btn-primary">New Chat</a>
         </div>
-
         <div class="card">
           <i class="fas fa-home"></i>
           <a href="/user/dashboard" class="btn-primary">Home</a>
         </div>
-
         <div class="card">
           <i class="fas fa-history"></i>
           <a href="/user/history" class="btn-primary">History</a>
         </div>
-
         <div class="card">
           <i class="fas fa-user"></i>
           <a href="/user/account" class="btn-primary">Account</a>
@@ -240,9 +232,23 @@
 
       <!-- Chat window -->
       <div class="chat-container">
-        <div class="p-4 border-b border-gray-200">
-          <h4 class="font-semibold text-xl">Conversation with Chatbot</h4>
+        <div class="p-4 border-b border-gray-200 flex flex-wrap items-center justify-between space-x-2">
+          <button id="menuToggle" class="md:hidden text-2xl focus:outline-none cursor-pointer">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h4 class="font-semibold text-xl flex-1">Conversation with Chatbot</h4>
+          <div class="flex space-x-2">
+            <select id="modelSelection" class="form-control">
+              <option value="gemini">Gemini</option>
+              <option value="llama">LLaMA Model</option>
+            </select>
+            <select id="responseType" class="form-control">
+              <option value="brief">Brief</option>
+              <option value="descriptive">Descriptive</option>
+            </select>
+          </div>
         </div>
+
         <div class="chat-box" id="chatBox">
           <input type="hidden" id="conversationId" value="<%= conversationId %>">
         </div>
@@ -250,22 +256,10 @@
         <!-- Message Input Section -->
         <div class="message-input">
           <textarea id="message" class="form-control" placeholder="Type a message..." onkeydown="handleKeyPress(event)"></textarea>
-
-          <select id="modelSelection">
-            <option value="gemini">Gemini</option>
-            <option value="llama">LLaMA Model</option>
-        </select>
-        
-        <select id="responseType">
-            <option value="brief">Brief</option>
-            <option value="descriptive">Descriptive</option>
-        </select>
-
           <button class="btn btn-send" id="sendBtn" onclick="sendMessage()">
             <i class="fas fa-paper-plane"></i>
           </button>
         </div>
-        
       </div>
     </div>
   </div>
@@ -279,35 +273,38 @@
 
   <script>
     function handleKeyPress(event) {
-  if (event.key === 'Enter') {
-    if (event.shiftKey) {
-      // Allow a new line when Shift+Enter is pressed
-      event.preventDefault();
-      const input = document.getElementById('message');
-      input.value += '\n';
-    } else {
-      // Send the message when Enter is pressed
-      event.preventDefault();
-      sendMessage();
+      if (event.key === 'Enter') {
+        if (event.shiftKey) {
+          event.preventDefault();
+          const input = document.getElementById('message');
+          input.value += '\n';
+        } else {
+          event.preventDefault();
+          sendMessage();
+        }
+      }
     }
-  }
-}
-
 
     function sendMessage() {
       var message = document.getElementById('message').value;
-      var model = document.getElementById('modelSelection').value;
-      var responseType = document.getElementById('responseType').value;
+      var model = document.getElementById('modelSelection')?.value;
+      var responseType = document.getElementById('responseType')?.value;
       if (message.trim() !== '') {
         var newMessage = document.createElement('div');
         newMessage.classList.add('message', 'user-message');
         newMessage.textContent = message;
-
         document.getElementById('chatBox').appendChild(newMessage);
         document.getElementById('message').value = '';
         document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight;
       }
     }
+
+    // Sidebar toggle for mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.chat-sidebar');
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
   </script>
 </body>
 </html>

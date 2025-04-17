@@ -30,7 +30,7 @@ exports.sendMessage = async (req, res) => {
     let conversation = await Chat.startConversation(userId, conversationId);
 
     // Forward the message to the Python server
-    const pythonServerUrl = 'http://127.0.0.1:5050/process_message'; // Adjust the URL as necessary
+    const pythonServerUrl = 'https://lalithkarthik-bccb.hf.space/process_message'; // Adjust the URL as necessary
     const pythonResponse = await axios.post(pythonServerUrl, {
       user_input: userMessage, 
       model: model,
